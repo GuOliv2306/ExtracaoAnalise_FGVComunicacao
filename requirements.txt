@@ -16,3 +16,4 @@ pydantic
 joblib
 numpy
 yt-dlp
+webdriver-manager
