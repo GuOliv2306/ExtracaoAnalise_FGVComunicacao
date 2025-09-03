@@ -23,8 +23,8 @@ chrome_options = ChromeOptions()
 chrome_options.add_argument("--start-maximized")  # abre a janela maximizada
 
 # O WebDriver Manager baixa e configura o driver automaticamente
-service = ChromeService(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=chrome_options)
+service = EdgeService(EdgeChromiumDriverManager().install())
+driver = webdriver.Edge(service=service, options=EdgeOptions)
 
 # Se quiser usar o Edge, basta substituir o Chrome pelo Edge
 # edge_options = EdgeOptions()
