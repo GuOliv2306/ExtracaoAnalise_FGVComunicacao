@@ -18,3 +18,4 @@ numpy
 yt-dlp
 webdriver-manager
 tqdm
+pydantic[email]
