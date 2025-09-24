@@ -1,8 +1,10 @@
-# 🚀 Projeto 4: Desenvolvimento de API com FastAPI
+# 🚀 Projeto 4: Desenvolvimento de API com FastAPI + Análise de IA
 
 ## 📋 **Objetivo da Tarefa**
 
-Desenvolver uma **API REST** usando **FastAPI** que sirva dados de uma base de dados criada ou obtida pelo aluno. A API deve ter pelo menos **2 endpoints** funcionais: um **básico** e um **médio**, seguindo os conceitos ensinados na **aula_14**.
+Desenvolver uma **API REST** usando **FastAPI** que sirva dados de uma base de dados criada ou obtida pelo aluno. A API deve ter pelo menos **2 endpoints** funcionais: um **básico** e um **médio**, seguindo os conceitos ensinados na **aula_14**. 
+
+**🆕 NOVO**: Adicionada funcionalidade de **Análise de IA** usando agno para análise inteligente dos dados.
 
 **⚠️ IMPORTANTE: Esta tarefa vale 0,5 pontos na nota final da A1**
 
@@ -13,6 +15,7 @@ Desenvolver uma **API REST** usando **FastAPI** que sirva dados de uma base de d
 - **Documentação Automática**: Utilizar a documentação automática do FastAPI
 - **Estruturação de Projetos**: Organização de código e arquivos
 - **Query Parameters e Path Parameters**: Diferentes formas de receber dados
+- **🧠 Análise de IA**: Integração com modelos de IA para análise inteligente de dados
 
 ## 🔧 **Tecnologias e Bibliotecas Obrigatórias**
 
@@ -20,6 +23,7 @@ Desenvolver uma **API REST** usando **FastAPI** que sirva dados de uma base de d
 ```python
 # API Framework
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 # Manipulação de dados (se necessário)
 import pandas as pd
@@ -29,25 +33,69 @@ import uvicorn
 
 # Utilitários (se necessário)
 import json
+
+# IA e Análise
+from agno.agent import Agent
+from agno.models.groq import Groq
+from agno.tools.python import PythonTools
+from agno.tools.pandas import PandasTools
 ```
 
 ### **Instalação:**
 ```bash
-pip install fastapi uvicorn pandas
+pip install fastapi uvicorn pandas agno
+```
+
+## 🤖 **Funcionalidades de IA Implementadas**
+
+### **Endpoints de Análise de IA:**
+
+#### **1. GET /IA**
+- **Descrição**: Retorna informações sobre como usar a análise de IA
+- **Resposta**: Instruções de uso e informações do dataset
+- **Exemplo de uso**: `GET http://localhost:8001/IA`
+
+#### **2. POST /analise_ia**
+- **Descrição**: Análise completa e detalhada usando IA
+- **Input**: JSON com pergunta e contexto
+- **Exemplo**:
+```json
+{
+  "pergunta": "Qual a taxa de sobrevivência por classe social?",
+  "contexto": "Dataset Titanic - análise detalhada"
+}
+```
+
+#### **3. GET /analise_rapida/{pergunta}**
+- **Descrição**: Análise rápida via URL
+- **Exemplo**: `GET http://localhost:8001/analise_rapida/Qual a taxa de sobrevivência geral?`
+
+### **Como Usar a Análise de IA:**
+
+```python
+import requests
+
+# Análise rápida
+response = requests.get("http://localhost:8001/analise_rapida/Qual a idade média dos sobreviventes?")
+print(response.json()['resposta_rapida'])
+
+# Análise detalhada
+payload = {
+    "pergunta": "Analise a sobrevivência por gênero e classe social",
+    "contexto": "Dataset Titanic com foco em fatores socioeconômicos"
+}
+response = requests.post("http://localhost:8001/analise_ia", json=payload)
+print(response.json()['resposta'])
 ```
 
 ## 📝 **Especificações Técnicas**
 
 ### **1. Base de Dados**
 
-Você deve escolher **UMA** das opções abaixo:
-
-#### **Opção A: Criar Dataset Próprio**
-- Criar um dataset com pelo menos **50 registros**
-- Salvar em formato CSV ou JSON
-- Exemplos de temas:
-  - Lista de filmes com nota, gênero, ano
-  - Cardápio de restaurante com preços e categorias
+**✅ IMPLEMENTADO**: Usando dataset Titanic do pandas
+- **Fonte**: `https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/titanic.csv`
+- **Registros**: ~891 passageiros
+- **Colunas**: PassengerId, Survived, Pclass, Name, Sex, Age, SibSp, Parch, Ticket, Fare, Cabin, Embarked
   - Lista de livros com autor, páginas, gênero
   - Produtos de loja com preço, categoria, estoque
   - Lista de cidades com população, estado, região
