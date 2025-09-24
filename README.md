@@ -4,6 +4,8 @@ Repositório oficial de materiais e códigos da disciplina de Extração e Anál
 
 - Repositório original: `https://github.com/mateuspestana/ExtracaoAnalise_FGVComunicacao`
 
+> 🔒 **Quer tornar este repositório privado?** Consulte o guia completo: [COMO_TORNAR_REPOSITORIO_PRIVADO.md](./COMO_TORNAR_REPOSITORIO_PRIVADO.md)
+
 ### Estrutura do repositório
 
 - `aula_XX/`: pasta de cada aula, com códigos, notebooks e materiais de suporte
